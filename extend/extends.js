@@ -12,7 +12,7 @@ function Person(name){
 }
 
 Person.prototype.showName=function(){
-    return this.name
+    return this.name;
 }
 
 var ps=new Person("json");
