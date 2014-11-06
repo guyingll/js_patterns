@@ -111,6 +111,7 @@ Book.prototype = {
     }
 }
 
+//public static attribute
 Book.converToTitleCase=function(){
     console.log(Book.num)
 }
