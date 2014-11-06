@@ -1,7 +1,4 @@
 /**
- * 提取extend方法
- * 优点：不用每次都写相同的extend方法
- * 缺点：构造函数中超类的名字被固化
  * @author yanpeng
  */
 function extend(subClass,superClass){
@@ -35,6 +32,7 @@ function Author(name,books){
     this.books=books;
 }
 extend(Author,Person);
+
 
 Author.prototype.showBooks=function(){
     return this.books;
