@@ -7,6 +7,11 @@ function extend(subClass,superClass){
     F.prototype=superClass.prototype;
     subClass.prototype=new F();
     subClass.prototype.constructor=subClass;
+    
+    subClass.superClass=superClass.prototype;
+    // if(superClass.prototype==Object.prototype){
+        // superClass.prototype.constructor=superClass.constructor;
+    // };    
 }
 
 //user it
@@ -19,15 +24,11 @@ Person.prototype.showName=function(){
     return this.name;
 }
 
-var ps=new Person("json");
-ps.showName();
-
-
 //subclass
 
 function Author(name,books){
     //super constuctors
-    Person.call(this,name);
+    Author.superClass.constructor.call(this,name);
     //sub own consturctors
     this.books=books;
 }
@@ -42,4 +43,9 @@ Author.prototype.showBooks=function(){
 var at=new Author("Rose Harms",["js patterns"]);
 console.log(at.showBooks());
 console.log(at.showName());
+
+extend(Person,Object);
+var at1=new Person("Rose Harms");
+console.log(at.showName());
+
 

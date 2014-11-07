@@ -42,6 +42,6 @@ Author.prototype.showBooks=function(){
 var at=new Author("Rose Harms",["js patterns"]);
 console.log(at.showBooks());
 console.log(at.showName());
-
-
+var p1=new Person("Rose Harms");
+console.log(p1.showBooks());
 
