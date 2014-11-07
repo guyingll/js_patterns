@@ -1,51 +1,83 @@
 /**
  * @author yanpeng
  */
-function extend(subClass,superClass){
-    var F=function(){}
-    // subClass.call(superClass);
-    F.prototype=superClass.prototype;
-    subClass.prototype=new F();
-    subClass.prototype.constructor=subClass;
+function extend(subClass, superClass) {
     
-    subClass.superClass=superClass.prototype;
-    // if(superClass.prototype==Object.prototype){
-        // superClass.prototype.constructor=superClass.constructor;
-    // };    
+    /*
+     * 1.subClass.prototype=superClass.prototype;
+     *  这种方式当subClass的prototype改变时，会导致superClass的prototype也跟着改变;
+     * 
+     * 2.subClass.prototype=new superClass();
+     *  这种方式实例化一个新的基类，执行基类的构造器方法。
+     * 
+     */
+    var F = function() {}
+    F.prototype = superClass.prototype;
+    subClass.prototype = new F();
+    subClass.prototype.constructor = subClass;
+
+    /* add a property to indicate what the superClass is
+     * this way one can call super methods via this.superclass.something
+     */
+    subClass.superClass = superClass.prototype;
+    /*
+     *  防止superClass的constructor指向的不是superClass，而是Object。如下形式：
+     *   var Person=function(){}
+     *   Person.prototype = {
+     *       showName : function() {
+     *           return this.name;
+     *       }
+     *   }
+     *   console.log(Person.prototype.constructor==Object) //true.   not the Person but the Object
+     *   
+     * 
+     */
+    if(superClass.prototype.constructor==Object.prototype.constructor){
+        superClass.prototype.constructor=superClass;
+    };
 }
 
 //user it
 //superclass
-function Person(name){
-    this.name=name;
+function Person(name) {
+    this.test = "it a test";
+    this.name = name;
 }
 
-Person.prototype.showName=function(){
-    return this.name;
+Person.prototype = {
+    showName : function() {
+        return this.name;
+    }
 }
+
+Person.prototype.showName=function() {
+        return this.name;
+    }
 
 //subclass
 
-function Author(name,books){
+function Author(name, books) {
     //super constuctors
-    Author.superClass.constructor.call(this,name);
+    Author.superClass.constructor.call(this, name);
     //sub own consturctors
-    this.books=books;
+    this.books = books;
 }
-extend(Author,Person);
 
+extend(Author, Person);
 
-Author.prototype.showBooks=function(){
+Author.prototype.showBooks = function() {
     return this.books;
 }
 
-
-var at=new Author("Rose Harms",["js patterns"]);
+Author.prototype.showName = function() {
+    var name=Author.superClass.showName.call(this);
+    return name+',Auhtor of '+this.showBooks().join(', ');
+}
+var p = new Person("Rose Harms");
+var at = new Author("Rose Harms", ["js patterns","test"]);
 console.log(at.showBooks());
 console.log(at.showName());
 
-extend(Person,Object);
-var at1=new Person("Rose Harms");
-console.log(at.showName());
-
+console.log(at.test);
+console.log(p.test);
 

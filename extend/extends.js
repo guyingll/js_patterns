@@ -8,12 +8,18 @@
 
 //superclass
 function Person(name){
+    this.genre="man";
     this.name=name;
 }
 
 Person.prototype.showName=function(){
     return this.name;
 }
+
+Person.prototype.sayA=function(){
+    return "sayA";
+}
+
 
 var ps=new Person("json");
 ps.showName();
@@ -28,7 +34,7 @@ function Author(name,books){
 }
 
 
-//super prototype
+//super prototype and super's constructor
 Author.prototype=new Person();
 
 //sub prototype constructor
@@ -39,9 +45,14 @@ Author.prototype.showBooks=function(){
     return this.books;
 }
 
-var at=new Author("Rose Harms",["js patterns"]);
-console.log(at.showBooks());
+Author.prototype.sayA=function(){
+    return "sayAuthor";
+}
+
+var p1=new Person("The Harman");
+var at=new Author();
 console.log(at.showName());
-var p1=new Person("Rose Harms");
-console.log(p1.showBooks());
+console.log(p1.showName());
+console.log(p1.genre);
+console.log(at.genre);
 

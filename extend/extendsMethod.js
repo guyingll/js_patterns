@@ -5,9 +5,10 @@
  * @author yanpeng
  */
 function extend(subClass,superClass){
+    //消除superClass中的属性，由后面的子类的构造函数构建
     var F=function(){}
-    // subClass.call(superClass);
     F.prototype=superClass.prototype;
+    
     subClass.prototype=new F();
     subClass.prototype.constructor=subClass;
 }
