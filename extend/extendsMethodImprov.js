@@ -1,4 +1,7 @@
 /**
+ * 类继承：1.用一个类声明定义对象的结构
+ *       2.实例化该类来创建一个新对象
+ * 类继承创造的对象都有一套该类的所有实例属性副本，但实例方法只存在一份
  * @author yanpeng
  */
 function extend(subClass, superClass) {
