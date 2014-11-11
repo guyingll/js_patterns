@@ -1,16 +1,16 @@
 /**
  * @author yanpeng
  */
-function  EditInPlaceField(id,parent,value){
-    this.id=id;
-    this.value=value||"default value";
-    this.parentElement=parent;
+var  EditInPlaceField={
+    config:function(id,parent,value){
+        this.id=id;
+        this.value=value||"default value";
+        this.parentElement=parent;
+        
+        this.createElements(this.id);
+        this.attachEvents();    
+    },
     
-    this.createElements(this.id);
-    this.attachEvents();    
-}
-
-EditInPlaceField.prototype={
     createElements:function(id){
         this.containerElement=document.createElement('div');
         this.parentElement.appendChild(this.containerElement);
@@ -88,23 +88,17 @@ EditInPlaceField.prototype={
     getVaule:function(){
         return this.fieldElement.value;
     }
-    
 }
 
-var titleClassical=new EditInPlaceField('titleClassical',$('doc'),'Title Here');
-var currentTitleText=titleClassical.getVaule(); 
+var titlePrototypal=clone(EditInPlaceField)
+titlePrototypal.configure(' titlePrototypal ', $('doc'), 'Title Here');
 
 
-function EditInPlaceArea(id, parent, value) {
-    EditInPlaceArea.superclass.constructor.call(this);
-}
-
-
-extend(EditInPlaceArea, EditInPlaceField);
+var EditInPlaceArea=clone(EditInPlaceField);
 
 // Override certain methods.
 
-EditInPlaceArea.prototype.createElements = function(id) {
+EditInPlaceArea.createElements = function(id) {
   this.containerElement = document.createElement('div');
   this.parentElement.appendChild(this.containerElement);
 
@@ -128,7 +122,7 @@ EditInPlaceArea.prototype.createElements = function(id) {
       
   this.convertToText();
 };
-EditInPlaceArea.prototype.convertToEditable = function() {
+EditInPlaceArea.convertToEditable = function() {
   this.staticElement.style.display = 'none';
   this.fieldElement.style.display = 'block';
   this.saveButton.style.display = 'inline';
@@ -136,7 +130,8 @@ EditInPlaceArea.prototype.convertToEditable = function() {
 
   this.setValue(this.value);
 };
-EditInPlaceArea.prototype.convertToText = function() {
+
+EditInPlaceArea.convertToText = function() {
   this.fieldElement.style.display = 'none';
   this.saveButton.style.display = 'none';
   this.cancelButton.style.display = 'none';
@@ -144,4 +139,5 @@ EditInPlaceArea.prototype.convertToText = function() {
 
   this.setValue(this.value);
 };
+
 
