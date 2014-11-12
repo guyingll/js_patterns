@@ -102,9 +102,16 @@ Function.prototype.method = function(name, fn) {
     method("load", function(uri, method) {
 
     })
-
+    
+/*
     window.$ = function() {
         return new _$(arguments);
+    };*/
+    //为了防止库冲突，可以让用户自己去命名当前库名称以及作用范围
+    window.installHelper=function(scope,interface){
+        scope[interface]=function(){
+            return new _$(arguments);
+        };
     };
 })();
 
