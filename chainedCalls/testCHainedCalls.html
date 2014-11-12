@@ -14,9 +14,11 @@
 			}
 		</style>
 		<script type="text/javascript">
-			window.onload=function(){
-				$("div1","div2").setStyle("background-color","red");
-			}
+			$(window).addEvent('load',function(){
+				$("div1","div2").setStyle("background-color","red").addEvent('click',function(){
+					alert($(this).getStyle("background-color"));
+				});
+			});
 		</script>
 	</head>
 	<body>
